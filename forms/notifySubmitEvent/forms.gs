@@ -3,12 +3,23 @@
  */
 
 function onFormSubmit(e) {
-    var response = e.response;
-    // var itemResponses = e.response.getItemResponses();
-    // console.log(JSON.stringify(itemResponses))
-    var email = response.getRespondentEmail();
-    var nickname = getNicknamefromEmail(email);
-    var message = [
+    let softwareName = ""
+    const response = e.response;
+    const itemResponses = response.getItemResponses(); 
+    // Iterates over the item responses.
+    for (const itemResponse of itemResponses) {
+      const title = itemResponse.getItem().getTitle()
+      if(title === "Software Name"){
+        softwareName = itemResponse.getResponse()
+      }
+      // Logs the items' questions and responses to the console.
+      console.log(`Response to the question '${title}' was
+        '${itemResponse.getResponse()}'`);
+    }
+
+    const email = response.getRespondentEmail();
+    const nickname = getNicknamefromEmail(email);
+    const message = [
         {
             "type": "section",
             "text": {
